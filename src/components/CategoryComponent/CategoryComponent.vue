@@ -11,10 +11,14 @@
 
 <style>
 .category {
-  border-radius: 10px;
+  min-height: 240px;
+  scale: 1;
+  transition: 0.5s scale;
+  cursor: pointer;
 }
 
 .category__wrapper {
+  height: 100%;
   position: relative;
   display: flex;
   justify-content: center;
@@ -27,12 +31,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.7;
+  z-index: 1;
+  filter: brightness(0.4);
 }
 
 .category__title {
   font-size: 24px;
   font-weight: 700;
   line-height: 24px;
+  color: white;
+  z-index: 2;
+}
+
+.category:hover,
+.category:focus,
+.category:active {
+  scale: 1.05;
 }
 </style>
