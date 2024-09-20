@@ -10,7 +10,9 @@ const imagePath = `/images/category/${props.imageName}.svg`
 <template>
   <article class="category">
     <div class="category__wrapper">
-      <img class="category__image" :src="imagePath" alt="" />
+      <div class="category__image-wrapper">
+        <img class="category__image" :src="imagePath" alt="" />
+      </div>
       <h2 class="category__title">{{ props.name }}</h2>
     </div>
   </article>
@@ -22,24 +24,33 @@ const imagePath = `/images/category/${props.imageName}.svg`
   scale: 1;
   transition: 0.5s scale;
   cursor: pointer;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .category__wrapper {
+  padding: 12px;
   height: 100%;
-  position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 }
 
+.category__image-wrapper {
+  padding: 12px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-color: white;
+  border: 2px solid black;
+}
+
 .category__image {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: block;
+  margin: 0 auto;
   width: 100%;
-  height: 100%;
-  z-index: 1;
-  filter: brightness(0.4);
+  height: auto;
 }
 
 .category__title {
@@ -47,7 +58,7 @@ const imagePath = `/images/category/${props.imageName}.svg`
   font-weight: 700;
   line-height: 24px;
   color: black;
-  z-index: 2;
+  text-align: center;
 }
 
 .category:hover,
