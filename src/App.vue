@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { fetchCategories } from './api'
 import CategoryComponent from './components/CategoryComponent/CategoryComponent.vue'
+import type { ICategory } from './types'
+
+const categories = ref<ICategory[]>([])
+
+onMounted(async () => {
+  const result = await fetchCategories()
+  categories.value = result.trivia_categories
+})
 </script>
 
 <template>
@@ -9,15 +19,11 @@ import CategoryComponent from './components/CategoryComponent/CategoryComponent.
         <div class="categories__wrapper">
           <h1 class="categories__title">Choose category to start:</h1>
           <div class="categories__cards">
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
-            <CategoryComponent />
+            <CategoryComponent
+              v-for="category in categories"
+              :key="category.id"
+              :name="category.name"
+            />
           </div>
         </div>
       </section>

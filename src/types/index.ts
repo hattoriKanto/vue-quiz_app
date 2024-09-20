@@ -7,3 +7,8 @@ export interface IQuery {
   difficulty: DifficultyType
   type: QueryType
 }
+
+export interface ICategory {
+  id: number
+  name: string
+}

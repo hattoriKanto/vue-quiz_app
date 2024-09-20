@@ -1,10 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  name: String
+})
+</script>
 
 <template>
   <article class="category">
     <div class="category__wrapper">
       <img class="category__image" src="/images/animals.jpg" alt="" />
-      <h2 class="category__title">Animals</h2>
+      <h2 class="category__title">{{ props.name }}</h2>
     </div>
   </article>
 </template>
