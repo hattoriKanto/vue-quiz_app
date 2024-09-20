@@ -2,13 +2,39 @@
 import { ref, onMounted } from 'vue'
 import { fetchCategories } from './api'
 import CategoryComponent from './components/CategoryComponent/CategoryComponent.vue'
-import type { ICategory } from './types'
+import type { IFetchedCategory, ICategory } from './types'
 
 const categories = ref<ICategory[]>([])
 
 onMounted(async () => {
   const result = await fetchCategories()
-  categories.value = result.trivia_categories
+  const fetchedCategories = result.trivia_categories
+
+  const createCategories = (fetchedCategories: IFetchedCategory[]) => {
+    const createdCategories = fetchedCategories.reduce((accum, curr) => {
+      let imageName = curr.name.split('').reduce((word, char) => {
+        if (char.match(/[^\w]|\s/)) {
+          word += ''
+        } else {
+          word += char
+        }
+
+        return word
+      }, '')
+      const category = {
+        ...curr,
+        imageName
+      }
+
+      accum.push(category)
+
+      return accum
+    }, [] as ICategory[])
+
+    return createdCategories
+  }
+
+  categories.value = createCategories(fetchedCategories)
 })
 </script>
 
@@ -23,6 +49,7 @@ onMounted(async () => {
               v-for="category in categories"
               :key="category.id"
               :name="category.name"
+              :image-name="category.imageName"
             />
           </div>
         </div>

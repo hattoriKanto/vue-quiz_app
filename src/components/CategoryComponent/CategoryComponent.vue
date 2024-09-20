@@ -1,13 +1,16 @@
 <script setup lang="ts">
 const props = defineProps({
-  name: String
+  name: String,
+  imageName: String
 })
+
+const imagePath = `/images/category/${props.imageName}.svg`
 </script>
 
 <template>
   <article class="category">
     <div class="category__wrapper">
-      <img class="category__image" src="/images/animals.jpg" alt="" />
+      <img class="category__image" :src="imagePath" alt="" />
       <h2 class="category__title">{{ props.name }}</h2>
     </div>
   </article>
@@ -43,7 +46,7 @@ const props = defineProps({
   font-size: 24px;
   font-weight: 700;
   line-height: 24px;
-  color: white;
+  color: black;
   z-index: 2;
 }
 

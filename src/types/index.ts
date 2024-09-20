@@ -8,7 +8,11 @@ export interface IQuery {
   type: QueryType
 }
 
-export interface ICategory {
+export interface IFetchedCategory {
   id: number
   name: string
+}
+
+export interface ICategory extends IFetchedCategory {
+  imageName: string
 }
