@@ -27,6 +27,8 @@
 body {
   font-family: 'Red Rose', Arial, Helvetica, sans-serif;
   font-weight: 400;
+  color: #fff;
+  background-color: #383d3b;
 }
 
 h1,
@@ -39,6 +41,11 @@ h6 {
   margin: 0;
 }
 
+h1 {
+  font-size: 64px;
+  line-height: 128px;
+}
+
 ul,
 ol {
   list-style: none;
@@ -46,9 +53,12 @@ ol {
 
 a {
   text-decoration: none;
+  color: #fff;
 }
 
 button {
-  background: transparent;
-  border-left: none;
+  border: none;
+  background-color: #42b983;
+  color: #fff;
+  cursor: pointer;
 }

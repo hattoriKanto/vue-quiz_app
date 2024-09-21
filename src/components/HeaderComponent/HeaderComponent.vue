@@ -29,9 +29,8 @@ import ContainerComponent from '../ContainerComponent/ContainerComponent.vue'
   padding-inline: 10px;
 
   font-size: 36px;
-  line-height: 24px;
+  line-height: 36px;
   font-weight: 700;
-  color: #fff;
 
   scale: 1;
   transition: 500ms scale;

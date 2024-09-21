@@ -14,3 +14,9 @@ import CategoriesPage from './views/CategoriesPage.vue'
     </ContainerComponent>
   </main>
 </template>
+
+<style scoped>
+.main {
+  padding-block: 120px;
+}
+</style>
