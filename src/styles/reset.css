@@ -1,7 +1,32 @@
+@font-face {
+  font-family: 'Red Rose';
+  font-weight: 700;
+  src:
+    local('Red Rose Bold'),
+    url('fonts/RedRose-Bold.ttf') format('truetype'),
+    url('fonts/RedRose-Bold.woff') format('woff'),
+    url('fonts/RedRose-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Red Rose';
+  font-weight: 400;
+  src:
+    local('Red Rose Regular'),
+    url('fonts/RedRose-Regular.ttf') format('truetype'),
+    url('fonts/RedRose-Regular.woff') format('woff'),
+    url('fonts/RedRose-Regular.woff2') format('woff2');
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body {
+  font-family: 'Red Rose', Arial, Helvetica, sans-serif;
+  font-weight: 400;
 }
 
 h1,
@@ -10,6 +35,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-weight: 700;
   margin: 0;
 }
 

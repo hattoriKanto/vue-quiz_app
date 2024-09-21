@@ -18,7 +18,7 @@ const imagePath = `/images/category/${props.imageName}.svg`
   </article>
 </template>
 
-<style>
+<style scoped>
 .category {
   min-height: 240px;
   scale: 1;
@@ -55,7 +55,6 @@ const imagePath = `/images/category/${props.imageName}.svg`
 
 .category__title {
   font-size: 24px;
-  font-weight: 700;
   line-height: 24px;
   color: black;
   text-align: center;
