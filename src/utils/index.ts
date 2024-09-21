@@ -1,4 +1,4 @@
-import type { IQuery } from '@/types'
+import type { ICategory, IFetchedCategory, IQuery } from '@/types'
 
 export const getURLByQuery = (ID: number, query: IQuery) => {
   const baseURL = `https://opentdb.com/api.php?category=${ID}`
@@ -15,4 +15,28 @@ export const getURLByQuery = (ID: number, query: IQuery) => {
   }, baseURL)
 
   return URL
+}
+
+export const createCategories = (fetchedCategories: IFetchedCategory[]) => {
+  const createdCategories = fetchedCategories.reduce((accum, curr) => {
+    let imageName = curr.name.split('').reduce((word, char) => {
+      if (char.match(/[^\w]|\s/)) {
+        word += ''
+      } else {
+        word += char
+      }
+
+      return word
+    }, '')
+    const category = {
+      ...curr,
+      imageName
+    }
+
+    accum.push(category)
+
+    return accum
+  }, [] as ICategory[])
+
+  return createdCategories
 }
