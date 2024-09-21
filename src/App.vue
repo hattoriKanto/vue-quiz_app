@@ -1,21 +1,16 @@
 <script setup lang="ts">
+import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
+import ContainerComponent from './components/ContainerComponent/ContainerComponent.vue'
 import WelcomePage from './views/WelcomePage.vue'
 import CategoriesPage from './views/CategoriesPage.vue'
 </script>
 
 <template>
+  <HeaderComponent />
   <main class="main">
-    <div class="container">
+    <ContainerComponent>
       <WelcomePage />
       <CategoriesPage />
-    </div>
+    </ContainerComponent>
   </main>
 </template>
-
-<style scoped>
-.container {
-  margin: 0 auto;
-  padding-inline: 12px;
-  max-width: 1200px;
-}
-</style>
