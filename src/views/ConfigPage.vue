@@ -1,30 +1,54 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { AmountType, DifficultyType, QuestionsType } from '@/types'
+import { RouterLink, useRouter } from 'vue-router'
+import useQuizConfigStore from '@/stores/quizConfig'
+import { Amount, Difficulty, Questions } from '@/utils'
 
-const amount = Object.entries(AmountType)
-const difficulty = Object.entries(DifficultyType)
-const questions = Object.entries(QuestionsType)
+const amountArray = Object.entries(Amount)
+const difficultyArray = Object.entries(Difficulty)
+const questionsArray = Object.entries(Questions)
+
+const quizConfigStore = useQuizConfigStore()
+const router = useRouter()
+
+const handleSubmit = (event: Event) => {
+  event.preventDefault()
+  console.table(quizConfigStore)
+  router.push('/')
+  quizConfigStore.$reset()
+}
 </script>
 
 <template>
   <section class="config">
     <div class="config__wrapper">
       <h1 class="config__title">Customise your quiz:</h1>
-      <form class="config__form form">
+      <form @submit="handleSubmit" class="config__form form">
         <div class="form__level">
           <h2 class="form__title">Choose difficulty:</h2>
           <div class="form__buttons">
-            <button v-for="option in difficulty" :key="option[0]" class="form__button">
-              {{ option[0] }}
+            <button
+              v-for="option in difficultyArray"
+              @click.prevent="quizConfigStore.setOptionValue('difficulty', option[0])"
+              :key="option[0]"
+              :class="{
+                form__button: true,
+                'active-option': option[0] === quizConfigStore.difficulty
+              }"
+            >
+              {{ option[1] }}
             </button>
           </div>
         </div>
         <div class="form__questions">
           <h2 class="form__title">Choose question's type:</h2>
           <div class="form__buttons">
-            <button v-for="option in questions" :key="option[0]" class="form__button">
-              {{ option[0] }}
+            <button
+              v-for="option in questionsArray"
+              @click.prevent="quizConfigStore.setOptionValue('type', option[0])"
+              :key="option[0]"
+              :class="{ form__button: true, 'active-option': option[0] === quizConfigStore.type }"
+            >
+              {{ option[1] }}
             </button>
           </div>
         </div>
@@ -32,16 +56,20 @@ const questions = Object.entries(QuestionsType)
           <h2 class="form__title">Choose amount of questions:</h2>
           <div class="form__buttons">
             <button
-              v-for="option in amount"
+              v-for="option in amountArray"
+              @click.prevent="quizConfigStore.setOptionValue('amount', option[0])"
               :key="option[0]"
-              class="form__button form__rounded-button"
+              :class="{
+                'form__button form__rounded-button': true,
+                'active-option': option[0] === quizConfigStore.amount
+              }"
             >
               {{ option[1] }}
             </button>
           </div>
         </div>
         <div class="form__buttons">
-          <RouterLink to="/" type="submit" class="form__button">Generate!</RouterLink>
+          <button type="submit" class="form__button">Generate!</button>
           <RouterLink to="/category" class="form__button form__back">Back</RouterLink>
         </div>
       </form>
@@ -84,6 +112,10 @@ const questions = Object.entries(QuestionsType)
     500ms color;
 }
 
+.form__link {
+  color: #fff;
+}
+
 .form__buttons {
   margin-top: 24px;
   display: flex;
@@ -101,11 +133,22 @@ const questions = Object.entries(QuestionsType)
   border-radius: 100%;
 }
 
+.active-option {
+  background-color: #fff;
+  border-color: #42b983;
+  color: #383d3b;
+  scale: 1.1;
+}
+
 .form__button:hover,
 .form__button:focus,
 .form__button:active {
   background-color: #fff;
   border-color: #42b983;
   color: #383d3b;
+
+  a {
+    color: #383d3b;
+  }
 }
 </style>
