@@ -21,11 +21,19 @@ const imagePath = `/images/category/${props.imageName}.svg`
 <style scoped>
 .category {
   min-height: 240px;
-  scale: 1;
-  transition: 0.5s scale;
-  cursor: pointer;
-  border: 2px solid black;
+  border: 4px solid black;
   border-radius: 10px;
+
+  background-color: #42b983;
+  color: #fff;
+
+  scale: 1;
+  transition:
+    500ms scale,
+    500ms color,
+    500ms background-color,
+    500ms border-color;
+  cursor: pointer;
 }
 
 .category__wrapper {
@@ -56,13 +64,15 @@ const imagePath = `/images/category/${props.imageName}.svg`
 .category__title {
   font-size: 24px;
   line-height: 24px;
-  color: black;
   text-align: center;
 }
 
 .category:hover,
 .category:focus,
 .category:active {
+  color: black;
+  background-color: #fff;
+  border-color: #42b983;
   scale: 1.05;
 }
 </style>

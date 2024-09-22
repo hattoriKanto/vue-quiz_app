@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { IQuery } from '@/types'
-import { getURLByQuery } from '@/utils'
+import { ERRORS, getURLByQuery } from '@/utils'
 
 export const fetchCategories = async () => {
   try {
@@ -11,7 +11,7 @@ export const fetchCategories = async () => {
   } catch (error) {
     if (error instanceof Error) {
       console.error('An error occurred while fetching the categories:', error)
-      throw new Error(error.message)
+      throw new Error(ERRORS.fetching)
     }
   }
 }
@@ -26,7 +26,7 @@ export const fetchQuestionsByCategoryID = async (ID: number, query: IQuery) => {
   } catch (error) {
     if (error instanceof Error) {
       console.error('An error occurred while fetching the category:', error)
-      throw new Error(error.message)
+      throw new Error(ERRORS.fetching)
     }
   }
 }

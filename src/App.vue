@@ -16,6 +16,6 @@ import ContainerComponent from './components/ContainerComponent/ContainerCompone
 
 <style scoped>
 .main {
-  padding-block: 120px;
+  padding-block: 60px;
 }
 </style>
