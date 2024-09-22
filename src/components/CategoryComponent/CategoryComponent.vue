@@ -1,20 +1,23 @@
 <script setup lang="ts">
-const props = defineProps({
-  name: String,
-  imageName: String
-})
+import { RouterLink } from 'vue-router'
+import type { ICategory } from '@/types'
 
-const imagePath = `/images/category/${props.imageName}.svg`
+const props = defineProps<{
+  category: ICategory
+}>()
+
+const URL = `/category/${props.category.id}/config`
+const imagePath = `/images/category/${props.category.imageName}.svg`
 </script>
 
 <template>
   <article class="category">
-    <div class="category__wrapper">
+    <RouterLink :to="URL" class="category__wrapper">
       <div class="category__image-wrapper">
-        <img class="category__image" :src="imagePath" alt="" />
+        <img class="category__image" :src="imagePath" :alt="props.category.imageName" />
       </div>
-      <h2 class="category__title">{{ props.name }}</h2>
-    </div>
+      <h2 class="category__title">{{ props.category.name }}</h2>
+    </RouterLink>
   </article>
 </template>
 
@@ -25,12 +28,10 @@ const imagePath = `/images/category/${props.imageName}.svg`
   border-radius: 10px;
 
   background-color: #42b983;
-  color: #fff;
 
   scale: 1;
   transition:
     500ms scale,
-    500ms color,
     500ms background-color,
     500ms border-color;
   cursor: pointer;
@@ -38,6 +39,7 @@ const imagePath = `/images/category/${props.imageName}.svg`
 
 .category__wrapper {
   padding: 12px;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -65,14 +67,19 @@ const imagePath = `/images/category/${props.imageName}.svg`
   font-size: 24px;
   line-height: 24px;
   text-align: center;
+  color: #fff;
+  transition: 500ms color;
 }
 
 .category:hover,
 .category:focus,
 .category:active {
-  color: black;
   background-color: #fff;
   border-color: #42b983;
   scale: 1.05;
+
+  .category__title {
+    color: black;
+  }
 }
 </style>

@@ -1,11 +1,23 @@
-type AmountType = 5 | 10
-type DifficultyType = 'mix' | 'easy' | 'medium' | 'hard'
-type QueryType = 'mix' | 'boolean' | 'multiple'
+export enum AmountType {
+  five = '5',
+  ten = '10'
+}
+export enum DifficultyType {
+  Easy = 'easy',
+  Medium = 'medium',
+  Hard = 'hard',
+  All = 'mix'
+}
+export enum QuestionsType {
+  'True/False' = 'boolean',
+  'Multiple' = 'multiple',
+  All = 'mix'
+}
 
 export interface IQuery {
   amount: AmountType
   difficulty: DifficultyType
-  type: QueryType
+  type: QuestionsType
 }
 
 export interface IFetchedCategory {

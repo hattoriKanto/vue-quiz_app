@@ -45,12 +45,7 @@ onMounted(async () => {
       <LoaderComponent v-if="isLoading" />
       <ErrorMessageComponent v-if="!isLoading && !isDataValid" />
       <div v-if="!isLoading && isDataValid" class="categories__cards">
-        <CategoryComponent
-          v-for="category in categories"
-          :key="category.id"
-          :name="category.name"
-          :image-name="category.imageName"
-        />
+        <CategoryComponent v-for="category in categories" :category="category" />
       </div>
     </div>
   </section>

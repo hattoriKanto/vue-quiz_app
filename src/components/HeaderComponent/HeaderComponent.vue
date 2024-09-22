@@ -32,6 +32,7 @@ import ContainerComponent from '../ContainerComponent/ContainerComponent.vue'
   font-size: 36px;
   line-height: 36px;
   font-weight: 700;
+  color: #fff;
 
   scale: 1;
   transition: 500ms scale;
