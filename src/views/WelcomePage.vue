@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <section class="welcome">
@@ -8,7 +10,7 @@
         Welcome to the V-Quiz App! Test your knowledge with challenging quizzes on various topics.
         Play and learn!
       </p>
-      <button class="welcome__button">Let's start!</button>
+      <RouterLink to="/category" class="welcome__button">Let's start!</RouterLink>
     </div>
   </section>
 </template>
@@ -27,15 +29,22 @@
 }
 
 .welcome__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   margin-top: 64px;
   width: 256px;
   height: 64px;
   border-radius: 30px;
+  border: 4px solid transparent;
 
   font-size: 24px;
   font-weight: 700;
+  color: #fff;
+  text-align: center;
 
-  border: 4px solid transparent;
+  background-color: #42b983;
   transition:
     500ms border-color,
     500ms background-color,

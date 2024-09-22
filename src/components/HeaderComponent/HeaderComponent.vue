@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import ContainerComponent from '../ContainerComponent/ContainerComponent.vue'
 </script>
 
@@ -6,7 +7,7 @@ import ContainerComponent from '../ContainerComponent/ContainerComponent.vue'
   <header class="header">
     <ContainerComponent>
       <div class="header__wrapper">
-        <a class="header__logo" href="">V-Quiz App</a>
+        <RouterLink to="/" class="header__logo" href="">V-Quiz App</RouterLink>
       </div>
     </ContainerComponent>
   </header>
