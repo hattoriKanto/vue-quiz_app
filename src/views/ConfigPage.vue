@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { RouterLink, useRouter } from 'vue-router'
-import useQuizConfigStore from '@/stores/quizConfig'
+import { useRouter } from 'vue-router'
+import { useQuizConfigStore, useQuestionsStore } from '@/stores'
+import { fetchQuestionsByCategoryID } from '@/api'
 import { Amount, Difficulty, Questions } from '@/utils'
 
 const amountArray = Object.entries(Amount)
@@ -8,12 +9,21 @@ const difficultyArray = Object.entries(Difficulty)
 const questionsArray = Object.entries(Questions)
 
 const quizConfigStore = useQuizConfigStore()
+const questionsStore = useQuestionsStore()
 const router = useRouter()
+const categoryId = Number(router.currentRoute.value.params.categoryId as string)
 
-const handleSubmit = (event: Event) => {
+const handleSubmit = async (event: Event) => {
   event.preventDefault()
-  console.table(quizConfigStore)
-  router.push('/')
+  const questions = await fetchQuestionsByCategoryID(categoryId, quizConfigStore.$state)
+  questionsStore.$patch({ questions: questions.results })
+  router.push(`/category/${categoryId}/questions/1`)
+  quizConfigStore.$reset()
+}
+
+const handleReset = async (event: Event) => {
+  event.preventDefault()
+  router.push('/category')
   quizConfigStore.$reset()
 }
 </script>
@@ -22,13 +32,13 @@ const handleSubmit = (event: Event) => {
   <section class="config">
     <div class="config__wrapper">
       <h1 class="config__title">Customise your quiz:</h1>
-      <form @submit="handleSubmit" class="config__form form">
+      <form @submit="handleSubmit" @reset="handleReset" class="config__form form">
         <div class="form__level">
           <h2 class="form__title">Choose difficulty:</h2>
           <div class="form__buttons">
             <button
               v-for="option in difficultyArray"
-              @click.prevent="quizConfigStore.setOptionValue('difficulty', option[0])"
+              @click.prevent="quizConfigStore.$patch({ difficulty: option[0] })"
               :key="option[0]"
               :class="{
                 form__button: true,
@@ -44,7 +54,7 @@ const handleSubmit = (event: Event) => {
           <div class="form__buttons">
             <button
               v-for="option in questionsArray"
-              @click.prevent="quizConfigStore.setOptionValue('type', option[0])"
+              @click.prevent="quizConfigStore.$patch({ type: option[0] })"
               :key="option[0]"
               :class="{ form__button: true, 'active-option': option[0] === quizConfigStore.type }"
             >
@@ -57,7 +67,7 @@ const handleSubmit = (event: Event) => {
           <div class="form__buttons">
             <button
               v-for="option in amountArray"
-              @click.prevent="quizConfigStore.setOptionValue('amount', option[0])"
+              @click.prevent="quizConfigStore.$patch({ amount: option[0] })"
               :key="option[0]"
               :class="{
                 'form__button form__rounded-button': true,
@@ -70,7 +80,7 @@ const handleSubmit = (event: Event) => {
         </div>
         <div class="form__buttons">
           <button type="submit" class="form__button">Generate!</button>
-          <RouterLink to="/category" class="form__button form__back">Back</RouterLink>
+          <button type="reset" class="form__button form__back">Back</button>
         </div>
       </form>
     </div>
