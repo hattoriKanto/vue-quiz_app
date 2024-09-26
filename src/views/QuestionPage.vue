@@ -7,6 +7,7 @@ import { onMounted } from 'vue'
 const router = useRouter()
 const questionId = ref<string>(router.currentRoute.value.params.questionId as string)
 const answers = ref<string[]>([])
+const choosedAnswerIndex = ref<number | null>()
 const questionsStore = useQuestionsStore()
 const currentURL = router.currentRoute.value.fullPath
 
@@ -23,13 +24,16 @@ const handleNextPage = () => {
   params[params.length - 1] = questionId.value
   const newUrl = params.join('/')
 
-  console.log(newUrl)
+  choosedAnswerIndex.value = null
 
   router.push(newUrl)
 }
 
+const handleAnswerSelection = (index: number) => {
+  choosedAnswerIndex.value = index
+}
+
 onMounted(() => {
-  console.log(questionsStore.questions)
   const currentQuestion = questionsStore.questions[Number(questionId.value) - 1]
   const { incorrect_answers, correct_answer } = currentQuestion
   const combinedAnswers = incorrect_answers
@@ -55,15 +59,105 @@ watch(questionId, () => {
         {{ questionsStore.questions[Number(questionId) - 1].question }}
       </h1>
       <div class="question__answers">
-        <button v-for="(answer, index) in answers" :key="index" class="question__answers-button">
+        <button
+          v-for="(answer, index) in answers"
+          :key="index"
+          @click="handleAnswerSelection(index)"
+          :id="String(index)"
+          :class="{
+            'question__answers-button': true,
+            'active-option': index === choosedAnswerIndex
+          }"
+        >
           {{ answer }}
         </button>
       </div>
+      <button @click="handleNextPage" class="question__next">
+        {{ Number(questionId) === questionsStore.questions.length ? 'Result!' : 'Next!' }}
+      </button>
     </div>
-    <button @click="handleNextPage" class="question__next">
-      {{ Number(questionId) === questionsStore.questions.length ? 'Result!' : 'Next!' }}
-    </button>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.question__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.question__title {
+  font-size: 48px;
+  line-height: 64px;
+  text-align: center;
+}
+
+.question__answers {
+  width: 100%;
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.question__answers-button {
+  width: 100%;
+  min-height: 64px;
+  background-color: transparent;
+  border-radius: 30px;
+  border: 4px solid #42b983;
+  font-size: 24px;
+  font-weight: 700;
+
+  transition:
+    500ms border-color,
+    500ms background-color,
+    500ms color;
+}
+
+.question__answers-button:hover,
+.question__answers-button:focus,
+.question__answers-button:active {
+  background-color: #fff;
+  border-color: #42b983;
+  color: #383d3b;
+}
+
+.question__next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 64px;
+  width: 256px;
+  height: 64px;
+  border-radius: 30px;
+  border: 4px solid transparent;
+
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+
+  background-color: #42b983;
+  transition:
+    500ms border-color,
+    500ms background-color,
+    500ms color;
+}
+
+.question__next:hover,
+.question__next:focus,
+.question__next:active {
+  background-color: #fff;
+  border-color: #42b983;
+  color: #383d3b;
+}
+
+.active-option {
+  background-color: #fff;
+  border-color: #42b983;
+  color: #383d3b;
+  scale: 1.05;
+}
+</style>
