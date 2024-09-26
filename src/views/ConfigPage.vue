@@ -1,12 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuizConfigStore, useQuestionsStore } from '@/stores'
 import { fetchQuestionsByCategoryID } from '@/api'
 import { Amount, Difficulty, Questions } from '@/utils'
+import LoaderComponent from '@/components/LoaderComponent/LoaderComponent.vue'
 
 const amountArray = Object.entries(Amount)
 const difficultyArray = Object.entries(Difficulty)
 const questionsArray = Object.entries(Questions)
+
+const isLoading = ref<boolean>(false)
 
 const quizConfigStore = useQuizConfigStore()
 const questionsStore = useQuestionsStore()
@@ -15,8 +19,10 @@ const categoryId = Number(router.currentRoute.value.params.categoryId as string)
 
 const handleSubmit = async (event: Event) => {
   event.preventDefault()
+  isLoading.value = true
   const questions = await fetchQuestionsByCategoryID(categoryId, quizConfigStore.$state)
   questionsStore.$patch({ questions: questions.results })
+  isLoading.value = false
   router.push(`/category/${categoryId}/questions/1`)
   quizConfigStore.$reset()
 }
@@ -30,7 +36,11 @@ const handleReset = async (event: Event) => {
 
 <template>
   <section class="config">
-    <div class="config__wrapper">
+    <div v-if="isLoading" class="config__wrapper">
+      <LoaderComponent />
+      <p class="config__message">Generating...</p>
+    </div>
+    <div v-if="!isLoading" class="config__wrapper">
       <h1 class="config__title">Customise your quiz:</h1>
       <form @submit="handleSubmit" @reset="handleReset" class="config__form form">
         <div class="form__level">
@@ -98,6 +108,13 @@ const handleReset = async (event: Event) => {
   display: flex;
   flex-direction: column;
   gap: 64px;
+}
+
+.config__message {
+  margin-top: 48px;
+  font-size: 36px;
+  line-height: 48px;
+  font-weight: 700;
 }
 
 .form__button {
