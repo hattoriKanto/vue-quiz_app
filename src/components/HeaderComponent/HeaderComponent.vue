@@ -7,7 +7,7 @@ import ContainerComponent from '../ContainerComponent/ContainerComponent.vue'
   <header class="header">
     <ContainerComponent>
       <div class="header__wrapper">
-        <RouterLink to="/" class="header__logo" href="">V-Quiz App</RouterLink>
+        <RouterLink to="/" class="header__logo">V-Quiz App</RouterLink>
       </div>
     </ContainerComponent>
   </header>

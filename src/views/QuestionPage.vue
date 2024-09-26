@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuestionsStore } from '@/stores'
-import { onMounted } from 'vue'
 
 const router = useRouter()
 const questionId = ref<string>(router.currentRoute.value.params.questionId as string)
