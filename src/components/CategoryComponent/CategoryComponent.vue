@@ -14,9 +14,9 @@ const imagePath = `/images/category/${props.category.imageName}.svg`
   <article class="category">
     <RouterLink :to="URL" class="category__wrapper">
       <div class="category__image-wrapper">
-        <img class="category__image" :src="imagePath" :alt="props.category.imageName" />
+        <img class="category__image" :src="imagePath" :alt="category.imageName" />
       </div>
-      <h2 class="category__title">{{ props.category.name }}</h2>
+      <h2 class="category__title">{{ category.name }}</h2>
     </RouterLink>
   </article>
 </template>
