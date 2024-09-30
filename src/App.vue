@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 
-import HeaderComponent from './components/HeaderComponent/HeaderComponent.vue'
-import ContainerComponent from './components/ContainerComponent/ContainerComponent.vue'
+import Header from '@/modules/Header/Header.vue'
+import Container from '@/ui/Container.vue'
 </script>
 
 <template>
-  <HeaderComponent />
+  <Header />
   <main class="main">
-    <ContainerComponent>
+    <Container>
       <RouterView />
-    </ContainerComponent>
+    </Container>
   </main>
 </template>
 

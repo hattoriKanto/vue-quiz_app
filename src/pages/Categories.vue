@@ -3,9 +3,11 @@ import { ref, onMounted } from 'vue'
 import { fetchCategories } from '@/api'
 import { createCategories, ERRORS } from '@/utils'
 import type { ICategory } from '@/types'
+import Loader from '@/modules/Loader/Loader.vue'
 import ErrorMessageComponent from '@/components/ErrorMessageComponent/ErrorMessageComponent.vue'
-import LoaderComponent from '@/components/LoaderComponent/LoaderComponent.vue'
 import CategoryComponent from '@/components/CategoryComponent/CategoryComponent.vue'
+import { loadingMessage, descriptionText, titleText } from '@/texts'
+import Text from '@/modules/Text/Text.vue'
 
 const categories = ref<ICategory[]>([])
 const isLoading = ref<boolean>(false)
@@ -40,9 +42,8 @@ onMounted(async () => {
 <template>
   <section class="categories">
     <div class="categories__wrapper">
-      <h1 class="categories__title">Quiz Categories</h1>
-      <p class="categories__description">Choose category and let's start:</p>
-      <LoaderComponent v-if="isLoading" />
+      <Text :title="titleText.categories" :description="descriptionText.categories" />
+      <Loader v-if="isLoading" :text="loadingMessage.loading" />
       <ErrorMessageComponent v-if="!isLoading && !isDataValid" />
       <div v-if="!isLoading && isDataValid" class="categories__cards">
         <CategoryComponent v-for="category in categories" :category="category" />
@@ -56,12 +57,6 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.categories__description {
-  text-align: center;
-  font-size: 36px;
-  line-height: 48px;
 }
 
 .categories__cards {

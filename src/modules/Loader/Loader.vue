@@ -1,10 +1,25 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import LoadingMessage from './ui/LoadingMessage.vue'
+
+defineProps<{
+  text: string
+}>()
+</script>
 
 <template>
-  <div class="loader" />
+  <div class="loader__wrapper">
+    <div class="loader" />
+    <LoadingMessage :text="text" />
+  </div>
 </template>
 
 <style scoped>
+.loader__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .loader {
   margin: 48px auto 0 auto;
   width: 80px;

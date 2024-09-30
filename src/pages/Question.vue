@@ -4,23 +4,23 @@ import { useRouter } from 'vue-router'
 import { useQuestionsStore } from '@/stores'
 
 const router = useRouter()
-const questionId = ref<string>(router.currentRoute.value.params.questionId as string)
+const questionId = ref<number>(Number(router.currentRoute.value.params.questionId as string))
 const answers = ref<string[]>([])
 const choosedAnswerIndex = ref<number | null>()
 const questionsStore = useQuestionsStore()
 const currentURL = router.currentRoute.value.fullPath
 
 const handleNextPage = () => {
-  if (Number(questionId.value) === questionsStore.questions.length) {
+  if (questionId.value === questionsStore.questions.length) {
     router.push('/')
     questionsStore.$reset()
     return
   }
 
-  questionId.value = String(Number(questionId.value) + 1)
+  questionId.value += 1
 
   const params = currentURL.split('/')
-  params[params.length - 1] = questionId.value
+  params[params.length - 1] = String(questionId.value)
   const newUrl = params.join('/')
 
   choosedAnswerIndex.value = null
@@ -32,30 +32,24 @@ const handleAnswerSelection = (index: number) => {
   choosedAnswerIndex.value = index
 }
 
-onMounted(() => {
-  const currentQuestion = questionsStore.questions[Number(questionId.value) - 1]
+const setCurrentQuestion = (id: number) => {
+  const currentQuestion = questionsStore.questions[id - 1]
   const { incorrect_answers, correct_answer } = currentQuestion
   const combinedAnswers = incorrect_answers
   const randomIndex = Math.floor(Math.random() * combinedAnswers.length)
   combinedAnswers.splice(randomIndex, 0, correct_answer)
   answers.value = combinedAnswers
-})
+}
 
-watch(questionId, () => {
-  const currentQuestion = questionsStore.questions[Number(questionId.value) - 1]
-  const { incorrect_answers, correct_answer } = currentQuestion
-  const combinedAnswers = incorrect_answers
-  const randomIndex = Math.floor(Math.random() * combinedAnswers.length)
-  combinedAnswers.splice(randomIndex, 0, correct_answer)
-  answers.value = combinedAnswers
-})
+onMounted(() => setCurrentQuestion(questionId.value))
+watch(questionId, () => setCurrentQuestion(questionId.value))
 </script>
 
 <template>
-  <section class="question">
+  <section v-if="questionsStore.questions[questionId - 1]" class="question">
     <div class="question__wrapper">
       <h1 class="question__title">
-        {{ questionsStore.questions[Number(questionId) - 1].question }}
+        {{ questionsStore.questions[questionId - 1].question }}
       </h1>
       <div class="question__answers">
         <button
@@ -72,7 +66,7 @@ watch(questionId, () => {
         </button>
       </div>
       <button @click="handleNextPage" class="question__next">
-        {{ Number(questionId) === questionsStore.questions.length ? 'Result!' : 'Next!' }}
+        {{ questionId === questionsStore.questions.length ? 'Result!' : 'Next!' }}
       </button>
     </div>
   </section>

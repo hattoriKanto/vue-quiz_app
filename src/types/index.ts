@@ -4,6 +4,8 @@ export interface IQuery {
   type: string
 }
 
+export type QueryField = keyof IQuery
+
 export interface IQuestion {
   type: string
   difficulty: string

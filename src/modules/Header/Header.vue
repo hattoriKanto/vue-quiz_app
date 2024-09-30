@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import ContainerComponent from '../ContainerComponent/ContainerComponent.vue'
+import Container from '../../ui/Container.vue'
 </script>
 
 <template>
   <header class="header">
-    <ContainerComponent>
+    <Container>
       <div class="header__wrapper">
         <RouterLink to="/" class="header__logo">V-Quiz App</RouterLink>
       </div>
-    </ContainerComponent>
+    </Container>
   </header>
 </template>
 

@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { descriptionText, titleText } from '@/texts'
+import Text from '@/modules/Text/Text.vue'
 </script>
 
 <template>
   <section class="welcome">
     <div class="welcome__wrapper">
-      <h1 class="welcome__title">Here we go!</h1>
-      <p class="welcome__descrption">
-        Welcome to the V-Quiz App! Test your knowledge with challenging quizzes on various topics.
-        Play and learn!
-      </p>
+      <Text :title="titleText.welcome" :description="descriptionText.welcome" />
       <RouterLink to="/category" class="welcome__button">Let's start!</RouterLink>
     </div>
   </section>
